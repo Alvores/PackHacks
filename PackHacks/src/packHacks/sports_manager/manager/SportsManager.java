@@ -34,10 +34,45 @@ public class SportsManager {
 		HashMap<String, Team> teamMap = ReportReader.readGames(filename);
 		teams = new ArrayList<>();
 		Set<String> teamSet = teamMap.keySet();
+		// Form main list
 		for (String str: teamSet) {
 			Team t = teamMap.get(str);
 			teams.add(t);
 		}
+		// Form statistically sorted lists: games lost, games won, most points, least points
+		Team[] tl = teams.toArray(new Team[teams.size()]);
+		Arrays.sort(tl, new Comparator<Team>() { // Sort by games won
+			@Override
+			public int compare(Team t1, Team t2) {
+				if (t1.getGamesWon() < t2.getGamesWon()) {
+					return -1;
+				} else if (t1.getGamesWon() > t2.getGamesWon()) {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+		});
+		// Obtain lists by wins
+		List<Team> tempList = Arrays.asList(tl);
+		teamsLeastWins = new ArrayList<>(tl.length);
+		teamsLeastWins.addAll(tempList);
+		teamsMostWins = new ArrayList<>(tl.length);
+		Collections.reverse(tempList);
+		teamsMostWins.addAll(tempList);
+		// Obtain lists by points
+		Arrays.sort(tl, new Comparator<Team>() { // Sort by games won
+			@Override
+			public int compare(Team t1, Team t2) {
+				if (t1.getGamesWonPoints() < t2.getGamesWonPoints()) {
+					return -1;
+				} else if (t1.getGamesWonPoints() > t2.getGamesWonPoints()) {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+		});
 	}
 
 	/**
