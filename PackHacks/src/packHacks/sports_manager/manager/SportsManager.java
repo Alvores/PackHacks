@@ -28,10 +28,15 @@ public class SportsManager {
 	/**
 	 * Constructs the SportsManager and reads in the data inputed by the indicated file.
 	 * @param filename the filename to read from
-	 * @throws FileNotFoundException  thrown if file is not found
 	 */
-	public SportsManager(String filename) throws FileNotFoundException {
-		HashMap<String, Team> teamMap = ReportReader.readGames(filename);
+	public SportsManager(String filename) {
+		HashMap<String, Team> teamMap = null;
+		try {
+			teamMap = ReportReader.readGames(filename);
+		} catch (FileNotFoundException e) {
+			// Should not reach here, UI pre-tests file validity
+			e.getMessage();
+		}
 		teams = new ArrayList<>();
 		Set<String> teamSet = teamMap.keySet();
 		// Form main list
@@ -72,13 +77,28 @@ public class SportsManager {
 				}
 			}
 		});
-		// Obtain lists by points
+		// Obtain list by games won points
 		tempList = Arrays.asList(tl);
-		teamsLeastPoints = new ArrayList<>(tl.length);
-		teamsLeastPoints.addAll(tempList);
 		teamsMostPoints = new ArrayList<>(tl.length);
 		Collections.reverse(tempList);
 		teamsMostPoints.addAll(tempList);
+		Arrays.sort(tl, new Comparator<Team>() { // Sort by points
+			@Override
+			public int compare(Team t1, Team t2) {
+				if (t1.getGamesLostPoints() < t2.getGamesLostPoints()) {
+					return -1;
+				} else if (t1.getGamesLostPoints() > t2.getGamesLostPoints()) {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+		});
+		// Obtain list by games lost points
+		tempList = Arrays.asList(tl);
+		teamsLeastPoints = new ArrayList<>(tl.length);
+		Collections.reverse(tempList);
+		teamsLeastPoints.addAll(tempList);
 	}
 
 	/**
@@ -88,7 +108,7 @@ public class SportsManager {
 	 */
 	public String generateWinsProfile() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Team Win Performance\n[");
+		sb.append("Team Win Performance:\n[  TeamID: Games Won");
 		for (int i = 0; i < teamsMostWins.size(); i++) {
 			Team t = teamsMostWins.get(i);
 			sb.append("\n   ");
@@ -108,7 +128,7 @@ public class SportsManager {
 	 */
 	public String generateLosesProfile() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Team Win Performance\n[");
+		sb.append("Team Lost Performance:\n[  TeamID: Games Won");
 		for (int i = 0; i < teamsLeastWins.size(); i++) {
 			Team t = teamsLeastWins.get(i);
 			sb.append("\n   ");
@@ -128,13 +148,13 @@ public class SportsManager {
 	 */
 	public String generateGreatestTotalPointsProfile() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Team Win Performance\n[");
+		sb.append("Team Points earned in Won games Performance:\n[  TeamID: Points Won");
 		for (int i = 0; i < teamsMostPoints.size(); i++) {
 			Team t = teamsMostPoints.get(i);
 			sb.append("\n   ");
 			sb.append(t.getTeamID());
 			sb.append(": ");
-			sb.append(t.getGamesWon());
+			sb.append(t.getGamesWonPoints());
 		}
 		sb.append("\n]");
 		String profile = sb.toString();
@@ -148,13 +168,13 @@ public class SportsManager {
 	 */
 	public String generateLowestTotalPointsProfile() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Team Win Performance\n[");
+		sb.append("Team Points earned in lost games Performance:\n[  TeamID: Points Won");
 		for (int i = 0; i < teamsLeastPoints.size(); i++) {
 			Team t = teamsLeastPoints.get(i);
 			sb.append("\n   ");
 			sb.append(t.getTeamID());
 			sb.append(": ");
-			sb.append(t.getGamesWon());
+			sb.append(t.getGamesLostPoints());
 		}
 		sb.append("\n]");
 		String profile = sb.toString();

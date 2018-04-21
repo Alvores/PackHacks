@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-import packHacks.sports_manager.data.Game;
 import packHacks.sports_manager.data.Team;
 
 /**
@@ -14,8 +13,7 @@ import packHacks.sports_manager.data.Team;
  */
 public class ReportReader {
 	
-	/** The hash map of games to help form the teams. */
-	private static HashMap<String, Game> games;
+
 	/** The hash map of teams to form and return. */
 	private static HashMap<String, Team> teams;
 	
@@ -28,7 +26,6 @@ public class ReportReader {
 	 */
 	public static HashMap<String, Team> readGames(String filename) throws FileNotFoundException {
 		try (Scanner readFile = new Scanner(new FileInputStream(filename))) {
-			games = new HashMap<>();
 			teams = new HashMap<>();
 			readFile.nextLine(); // The first line in input file consists of data headers
 			while (readFile.hasNextLine()) {
@@ -39,14 +36,17 @@ public class ReportReader {
 				}
 			}
 		}
-		makeTeams();
 		return teams;
 	}
 	
+	/**
+	 * Reads in a line from the input and parses it into relevant information.
+	 * @param fileline the line to parse
+	 */
 	private static void parseEvent(String fileline) {
 		fileline = fileline.trim();
 		String[] data = fileline.split(",");
-		if (data.length != 5) {
+		if (data.length != 11) {
 			throw new IllegalArgumentException(); // Skip this input line
 		}
 		String day = data[2].trim();
@@ -54,42 +54,21 @@ public class ReportReader {
 		String losingTeam = data[4].trim();
 		int winPoints = Integer.parseInt(data[5].trim());
 		int losePoints = Integer.parseInt(data[6].trim());
-		if (games.containsKey(day)) { // Update game information
-			Game current = games.get(day);
-			int currentWonPoints = current.getWinPoints();
-			int currentLosePoints = current.getLosePoints();
-			current.setWinPoints(currentWonPoints + winPoints);
-			current.setLosePoints(currentLosePoints + losePoints);
-		} else { // Create and add game
-			Game game = new Game(winningTeam, losingTeam, day);
-			games.put(day, game);
+		if (teams.containsKey(winningTeam)) { // Update win team data
+			Team team = teams.get(winningTeam);
+			team.incrementGamesWon(winPoints, day);
+		} else { // Form new team
+			Team team = new Team(winningTeam);
+			team.incrementGamesWon(winPoints, day);
+			teams.put(winningTeam, team);
 		}
-	}
-	
-	/**
-	 * Adds and adjusts teams with their game performance across
-	 * a season as provided by the initial input file.
-	 */
-	private static void makeTeams() {
-		Set<String> gameSet = teams.keySet();
-		for (String str: gameSet) {
-			Game game = games.get(str);
-			String winID = game.getWinningTeam();
-			String loseID = game.getLosingTeam();
-			if (teams.containsKey(winID)) { // Update win team data
-				Team team = teams.get(winID);
-				team.incrementGamesWon(game);
-			} else { // Form new team
-				Team team = new Team(winID);
-				team.incrementGamesWon(game);
-			}
-			if (teams.containsKey(loseID)) { // Update lose team data
-				Team team = teams.get(loseID);
-				team.incrementGamesLost(game);
-			} else { // Form new team
-				Team team = new Team(loseID);
-				team.incrementGamesLost(game);
-			}
+		if (teams.containsKey(losingTeam)) { // Update lose team data
+			Team team = teams.get(losingTeam);
+			team.incrementGamesLost(losePoints, day);
+		} else { // Form new team
+			Team team = new Team(losingTeam);
+			team.incrementGamesLost(losePoints, day);
+			teams.put(losingTeam, team);
 		}
 	}
 

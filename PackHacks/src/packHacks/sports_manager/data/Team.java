@@ -1,5 +1,7 @@
 package packHacks.sports_manager.data;
 
+import java.util.HashMap;
+
 /**
  * The team class contains information for a team such as the number of
  * games they won at home, away from home, and the number of points they
@@ -19,12 +21,15 @@ public class Team {
 	private int gamesLostPoints;
 	// Team specifics
 	private String teamID;
+	/** Checks if number of games should be incremented. */
+	private HashMap<String, String> games;
 	
 	/**
 	 * Constructs a team object.
 	 * @param teamID the string id of the team
 	 */
 	public Team(String teamID) {
+		games = new HashMap<>();
 		setTeamID(teamID);
 		setGamesLost(0);
 		setGamesLostPoints(0);
@@ -114,20 +119,28 @@ public class Team {
 	
 	/**
 	 * Adjusts the team statistics based on the won played game.
-	 * @param game the game to use for adjustment
+	 * @param points the points to increment by
+	 * @param day the day of the game the points were scored
 	 */
-	public void incrementGamesWon(Game game) {
-		this.gamesWon++;
-		this.gamesWonPoints += game.getWinPoints();
+	public void incrementGamesWon(int points, String day) {
+		this.gamesWonPoints += points;
+		if (!games.containsKey(day)) {
+			this.gamesWon++;
+			games.put(day, day);
+		}
 	}
 	
 	/**
 	 * Adjusts the team statistics based on the lost played game.
-	 * @param game the game to use for adjustment
+	 * @param points the points to increment by
+	 * @param day the day of the game the points were scored
 	 */
-	public void incrementGamesLost(Game game) {
-		this.gamesLost++;
-		this.gamesLostPoints += game.getLosePoints();
+	public void incrementGamesLost(int points, String day) {
+		this.gamesLostPoints += points;
+		if (!games.containsKey(day)) {
+			this.gamesLost++;
+			games.put(day, day);
+		}
 	}
 
 }
