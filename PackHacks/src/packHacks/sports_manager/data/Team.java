@@ -8,24 +8,15 @@ package packHacks.sports_manager.data;
  */
 public class Team {
 	
-	// Away games
-	/** The total number of games won away from home. */
-	private int awayGamesWon;
-	/** The total number of points earned in games won away from home. */
-	private int awayGamesWonPoints;
-	/** The total number of games lost away from home. */
-	private int awayGamesLost;
-	/** The total number of points earned in games lost away from home. */
-	private int awayGamesLostPoints;
-	// Home games
-	/** The total number of games won away at home. */
-	private int homeGamesWon;
-	/** The total number of points earned in games won at home. */
-	private int homeGamesWonPoints;
-	/** The total number of games lost at home. */
-	private int homeGamesLost;
-	/** The total number of points earned in games lost t home. */
-	private int homeGamesLostPoints;
+	// Season games
+	/** The total number of games won. */
+	private int gamesWon;
+	/** The total number of points earned in games won. */
+	private int gamesWonPoints;
+	/** The total number of games lost. */
+	private int gamesLost;
+	/** The total number of points earned in games lost. */
+	private int gamesLostPoints;
 	// Team specifics
 	private String teamID;
 	
@@ -35,142 +26,74 @@ public class Team {
 	 */
 	public Team(String teamID) {
 		setTeamID(teamID);
-		setAwayGamesWon(0);
-		setAwayGamesWonPoints(0);
-		setAwayGamesLost(0);
-		setAwayGamesLostPoints(0);
-		setHomeGamesWon(0);
-		setHomeGamesWonPoints(0);
-		setHomeGamesLost(0);
-		setHomeGamesLostPoints(0);
+		setGamesLost(0);
+		setGamesLostPoints(0);
+		setGamesWon(0);
+		setGamesWonPoints(0);
 	}
 
 	/**
-	 * Returns the number of games won away from home.
-	 * @return the awayGamesWon
+	 * Returns the number of games won.
+	 * @return the gamesWon
 	 */
-	public int getAwayGamesWon() {
-		return awayGamesWon;
+	public int getGamesWon() {
+		return gamesWon;
 	}
 
 	/**
-	 * Sets the number of games won away from home.
-	 * @param awayGamesWon the awayGamesWon to set
+	 * Sets the number of games won.
+	 * @param gamesWon the gamesWon to set
 	 */
-	public void setAwayGamesWon(int awayGamesWon) {
-		this.awayGamesWon = awayGamesWon;
+	public void setGamesWon(int gamesWon) {
+		this.gamesWon = gamesWon;
 	}
 
 	/**
-	 * Return the number of points earned in won away games.
+	 * Return the number of points earned in won games.
 	 * @return the awayGamesWonPoints
 	 */
-	public int getAwayGamesWonPoints() {
-		return awayGamesWonPoints;
+	public int getGamesWonPoints() {
+		return gamesWonPoints;
 	}
 
 	/**
-	 * Sets the number of points earned in won away games.
-	 * @param awayGamesWonPoints the awayGamesWonPoints to set
+	 * Sets the number of points earned in won games.
+	 * @param gamesWonPoints the gamesWonPoints to set
 	 */
-	public void setAwayGamesWonPoints(int awayGamesWonPoints) {
-		this.awayGamesWonPoints = awayGamesWonPoints;
+	public void setGamesWonPoints(int gamesWonPoints) {
+		this.gamesWonPoints = gamesWonPoints;
 	}
 
 	/**
-	 * Returns the number of games lost away from home.
-	 * @return the awayGamesLost
+	 * Returns the number of games lost.
+	 * @return the gamesLost
 	 */
-	public int getAwayGamesLost() {
-		return awayGamesLost;
+	public int getGamesLost() {
+		return gamesLost;
 	}
 
 	/**
-	 * Sets the number of games lost away from home.
-	 * @param awayGamesLost the awayGamesLost to set
+	 * Sets the number of games lost.
+	 * @param gamesLost the gamesLost to set
 	 */
-	public void setAwayGamesLost(int awayGamesLost) {
-		this.awayGamesLost = awayGamesLost;
+	public void setGamesLost(int gamesLost) {
+		this.gamesLost = gamesLost;
 	}
 
 	/**
-	 * Returns the number of points earned in lost away games.
-	 * @return the awayGamesLostPoints
+	 * Returns the number of points earned in lost games.
+	 * @return the gamesLostPoints
 	 */
-	public int getAwayGamesLostPoints() {
-		return awayGamesLostPoints;
+	public int getGamesLostPoints() {
+		return gamesLostPoints;
 	}
 
 	/**
-	 * Sets the number of points earned in lost away games.
-	 * @param awayGamesLostPoints the awayGamesLostPoints to set
+	 * Sets the number of points earned in lost games.
+	 * @param gamesLostPoints the gamesLostPoints to set
 	 */
-	public void setAwayGamesLostPoints(int awayGamesLostPoints) {
-		this.awayGamesLostPoints = awayGamesLostPoints;
-	}
-
-	/**
-	 * Returns the number of home games won.
-	 * @return the homeGamesPoints
-	 */
-	public int getHomeGamesWon() {
-		return homeGamesWon;
-	}
-
-	/**
-	 * Sets the number of home games won.
-	 * @param homeGamesPoints the homeGamesPoints to set
-	 */
-	public void setHomeGamesWon(int homeGamesPoints) {
-		this.homeGamesWon = homeGamesPoints;
-	}
-
-	/**
-	 * Returns the number of points earned in won home games.
-	 * @return the homeGamesWonPoints
-	 */
-	public int getHomeGamesWonPoints() {
-		return homeGamesWonPoints;
-	}
-
-	/**
-	 * Sets the number of points earned in won home games.
-	 * @param homeGamesWonPoints the homeGamesWonPoints to set
-	 */
-	public void setHomeGamesWonPoints(int homeGamesWonPoints) {
-		this.homeGamesWonPoints = homeGamesWonPoints;
-	}
-
-	/**
-	 * Returns the number of home games lost.
-	 * @return the homeGamesLost
-	 */
-	public int getHomeGamesLost() {
-		return homeGamesLost;
-	}
-
-	/**
-	 * Sets the number of home games lost.
-	 * @param homeGamesLost the homeGamesLost to set
-	 */
-	public void setHomeGamesLost(int homeGamesLost) {
-		this.homeGamesLost = homeGamesLost;
-	}
-
-	/**
-	 * Returns the number of points earned in lost home games.
-	 * @return the homeGamesLostPoints
-	 */
-	public int getHomeGamesLostPoints() {
-		return homeGamesLostPoints;
-	}
-
-	/**
-	 * Sets the number of points earned in lost home games.
-	 * @param homeGamesLostPoints the homeGamesLostPoints to set
-	 */
-	public void setHomeGamesLostPoints(int homeGamesLostPoints) {
-		this.homeGamesLostPoints = homeGamesLostPoints;
+	public void setGamesLostPoints(int gamesLostPoints) {
+		this.gamesLostPoints = gamesLostPoints;
 	}
 
 	/**
@@ -187,6 +110,24 @@ public class Team {
 	 */
 	public void setTeamID(String teamID) {
 		this.teamID = teamID;
+	}
+	
+	/**
+	 * Adjusts the team statistics based on the won played game.
+	 * @param game the game to use for adjustment
+	 */
+	public void incrementGamesWon(Game game) {
+		this.gamesWon++;
+		this.gamesWonPoints += game.getWinPoints();
+	}
+	
+	/**
+	 * Adjusts the team statistics based on the lost played game.
+	 * @param game the game to use for adjustment
+	 */
+	public void incrementGamesLost(Game game) {
+		this.gamesLost++;
+		this.gamesLostPoints += game.getLosePoints();
 	}
 
 }
