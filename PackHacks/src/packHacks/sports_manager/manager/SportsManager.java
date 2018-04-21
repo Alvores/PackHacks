@@ -60,8 +60,7 @@ public class SportsManager {
 		teamsMostWins = new ArrayList<>(tl.length);
 		Collections.reverse(tempList);
 		teamsMostWins.addAll(tempList);
-		// Obtain lists by points
-		Arrays.sort(tl, new Comparator<Team>() { // Sort by games won
+		Arrays.sort(tl, new Comparator<Team>() { // Sort by points
 			@Override
 			public int compare(Team t1, Team t2) {
 				if (t1.getGamesWonPoints() < t2.getGamesWonPoints()) {
@@ -73,6 +72,13 @@ public class SportsManager {
 				}
 			}
 		});
+		// Obtain lists by points
+		tempList = Arrays.asList(tl);
+		teamsLeastPoints = new ArrayList<>(tl.length);
+		teamsLeastPoints.addAll(tempList);
+		teamsMostPoints = new ArrayList<>(tl.length);
+		Collections.reverse(tempList);
+		teamsMostPoints.addAll(tempList);
 	}
 
 	/**
@@ -81,7 +87,18 @@ public class SportsManager {
 	 * @return report the generated report
 	 */
 	public String generateWinsProfile() {
-		return null; // Placeholder
+		StringBuilder sb = new StringBuilder();
+		sb.append("Team Win Performance\n[");
+		for (int i = 0; i < teamsMostWins.size(); i++) {
+			Team t = teamsMostWins.get(i);
+			sb.append("\n   ");
+			sb.append(t.getTeamID());
+			sb.append(": ");
+			sb.append(t.getGamesWon());
+		}
+		sb.append("\n]");
+		String profile = sb.toString();
+		return profile;
 	}
 
 	/**
@@ -90,7 +107,18 @@ public class SportsManager {
 	 * @return report the generated report
 	 */
 	public String generateLosesProfile() {
-		return null; // Placeholder
+		StringBuilder sb = new StringBuilder();
+		sb.append("Team Win Performance\n[");
+		for (int i = 0; i < teamsLeastWins.size(); i++) {
+			Team t = teamsLeastWins.get(i);
+			sb.append("\n   ");
+			sb.append(t.getTeamID());
+			sb.append(": ");
+			sb.append(t.getGamesWon());
+		}
+		sb.append("\n]");
+		String profile = sb.toString();
+		return profile;
 	}
 
 	/**
@@ -99,7 +127,18 @@ public class SportsManager {
 	 * @return report the generated report
 	 */
 	public String generateGreatestTotalPointsProfile() {
-		return null; // Placeholder
+		StringBuilder sb = new StringBuilder();
+		sb.append("Team Win Performance\n[");
+		for (int i = 0; i < teamsMostPoints.size(); i++) {
+			Team t = teamsMostPoints.get(i);
+			sb.append("\n   ");
+			sb.append(t.getTeamID());
+			sb.append(": ");
+			sb.append(t.getGamesWon());
+		}
+		sb.append("\n]");
+		String profile = sb.toString();
+		return profile;
 	}
 
 	/**
@@ -108,7 +147,18 @@ public class SportsManager {
 	 * @return report the generated report
 	 */
 	public String generateLowestTotalPointsProfile() {
-		return null; // Placeholder
+		StringBuilder sb = new StringBuilder();
+		sb.append("Team Win Performance\n[");
+		for (int i = 0; i < teamsLeastPoints.size(); i++) {
+			Team t = teamsLeastPoints.get(i);
+			sb.append("\n   ");
+			sb.append(t.getTeamID());
+			sb.append(": ");
+			sb.append(t.getGamesWon());
+		}
+		sb.append("\n]");
+		String profile = sb.toString();
+		return profile;
 	}
 
 }
