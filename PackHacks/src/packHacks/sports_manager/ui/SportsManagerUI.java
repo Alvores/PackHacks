@@ -1,6 +1,5 @@
 package packHacks.sports_manager.ui;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
@@ -25,29 +24,29 @@ public class SportsManagerUI {
 	 * Runs the SportsManager program.
 	 */
 	public static void run() {
+//		filename = "input/Events_2010.csv"; // For quick reference
+//		filename = "input/Events_2010_large.csv"; // For quick reference
 		String filename;
 		Scanner input = new Scanner(System.in);
-		////////////////////// UNCOMMENT LATER
-//		System.out.println("Enter a filename for sports data input: ");
-//		System.out.println("Or enter -1 to terminate the program: ");
-//		filename = input.nextLine();
-//		if (filename.equals("-1")) {
-//			input.close();
-//			System.exit(0);
-//		}
-//		boolean valid = false;
-//		while (!valid) {
-//			try { // Check if file exists
-//				ReportReader.readGames(filename);
-//				valid = true;
-//			} catch (FileNotFoundException e) { // Not a valid file name
-//				System.out.println("The file: " + filename + " is not valid.");
-//				System.out.println("Please enter a different filename: ");
-//				filename = input.nextLine();
-//			}
-//		}
-		////////////////////// UNCOMMENT LATER
-		filename = "input/Events_2010.csv";//REMOVE LATER
+		System.out.println("Precede filename with exact extension of input/");
+		System.out.println("Enter a filename for sports data input: ");
+		System.out.println("Or enter -1 to terminate the program: ");
+		filename = input.nextLine();
+		if (filename.equals("-1")) {
+			input.close();
+			System.exit(0);
+		}
+		boolean valid = false;
+		while (!valid) {
+			try { // Check if file exists
+				ReportReader.readGames(filename);
+				valid = true;
+			} catch (FileNotFoundException e) { // Not a valid file name
+				System.out.println("The file: " + filename + " is not valid.");
+				System.out.println("Please enter a different filename: ");
+				filename = input.nextLine();
+			}
+		}
 		SportsManager sm = new SportsManager(filename);
 		System.out.println("Enter 0 to generate the statistics by games won.");
 		System.out.println("Enter 1 to generate the statistics by games lost.");
@@ -77,15 +76,7 @@ public class SportsManagerUI {
 			break; // Should not reach here
 		}
 		System.out.println(report);
-//		System.out.println("Enter -1 to terminate the program: ");
-//		System.out.println("Or enter anything else to re-run the program.");
-//		String rerun = input.nextLine();
 		input.close();
-//		if (rerun.equals("-1")) {
-//			System.exit(0);
-//		} else {
-//			run();
-//		}
 	}
 
 }

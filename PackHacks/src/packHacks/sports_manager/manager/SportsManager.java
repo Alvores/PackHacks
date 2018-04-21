@@ -19,11 +19,11 @@ public class SportsManager {
 	/** The teams list sorted by most wins. */
 	private ArrayList<Team> teamsMostWins;
 	/** The teams list sorted by least wins. */
-	private ArrayList<Team> teamsLeastWins;
+	private ArrayList<Team> teamsMostLoses;
 	/** The teams list sorted by most points. */
-	private ArrayList<Team> teamsMostPoints;
+	private ArrayList<Team> teamsPointsForWins;
 	/** The teams list sorted by least points. */
-	private ArrayList<Team> teamsLeastPoints;
+	private ArrayList<Team> teamtsPointsForLoses;
 
 	/**
 	 * Constructs the SportsManager and reads in the data inputed by the indicated file.
@@ -60,11 +60,28 @@ public class SportsManager {
 		});
 		// Obtain lists by wins
 		List<Team> tempList = Arrays.asList(tl);
-		teamsLeastWins = new ArrayList<>(tl.length);
-		teamsLeastWins.addAll(tempList);
 		teamsMostWins = new ArrayList<>(tl.length);
 		Collections.reverse(tempList);
 		teamsMostWins.addAll(tempList);
+		/////////////
+		Arrays.sort(tl, new Comparator<Team>() { // Sort by games won
+			@Override
+			public int compare(Team t1, Team t2) {
+				if (t1.getGamesLost() < t2.getGamesLost()) {
+					return -1;
+				} else if (t1.getGamesLost() > t2.getGamesLost()) {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+		});
+		// Obtain lists by loses
+		tempList = Arrays.asList(tl);
+		teamsMostLoses = new ArrayList<>(tl.length);
+		Collections.reverse(tempList);
+		teamsMostLoses.addAll(tempList);
+		/////////////
 		Arrays.sort(tl, new Comparator<Team>() { // Sort by points
 			@Override
 			public int compare(Team t1, Team t2) {
@@ -79,9 +96,9 @@ public class SportsManager {
 		});
 		// Obtain list by games won points
 		tempList = Arrays.asList(tl);
-		teamsMostPoints = new ArrayList<>(tl.length);
+		teamsPointsForWins = new ArrayList<>(tl.length);
 		Collections.reverse(tempList);
-		teamsMostPoints.addAll(tempList);
+		teamsPointsForWins.addAll(tempList);
 		Arrays.sort(tl, new Comparator<Team>() { // Sort by points
 			@Override
 			public int compare(Team t1, Team t2) {
@@ -96,9 +113,9 @@ public class SportsManager {
 		});
 		// Obtain list by games lost points
 		tempList = Arrays.asList(tl);
-		teamsLeastPoints = new ArrayList<>(tl.length);
+		teamtsPointsForLoses = new ArrayList<>(tl.length);
 		Collections.reverse(tempList);
-		teamsLeastPoints.addAll(tempList);
+		teamtsPointsForLoses.addAll(tempList);
 	}
 
 	/**
@@ -128,13 +145,13 @@ public class SportsManager {
 	 */
 	public String generateLosesProfile() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Team Lost Performance:\n[  TeamID: Games Won");
-		for (int i = 0; i < teamsLeastWins.size(); i++) {
-			Team t = teamsLeastWins.get(i);
+		sb.append("Team Lost Performance:\n[  TeamID: Games Lost");
+		for (int i = 0; i < teamsMostLoses.size(); i++) {
+			Team t = teamsMostLoses.get(i);
 			sb.append("\n   ");
 			sb.append(t.getTeamID());
 			sb.append(": ");
-			sb.append(t.getGamesWon());
+			sb.append(t.getGamesLost());
 		}
 		sb.append("\n]");
 		String profile = sb.toString();
@@ -149,8 +166,8 @@ public class SportsManager {
 	public String generateGreatestTotalPointsProfile() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Team Points earned in Won games Performance:\n[  TeamID: Points Won");
-		for (int i = 0; i < teamsMostPoints.size(); i++) {
-			Team t = teamsMostPoints.get(i);
+		for (int i = 0; i < teamsPointsForWins.size(); i++) {
+			Team t = teamsPointsForWins.get(i);
 			sb.append("\n   ");
 			sb.append(t.getTeamID());
 			sb.append(": ");
@@ -169,8 +186,8 @@ public class SportsManager {
 	public String generateLowestTotalPointsProfile() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Team Points earned in lost games Performance:\n[  TeamID: Points Won");
-		for (int i = 0; i < teamsLeastPoints.size(); i++) {
-			Team t = teamsLeastPoints.get(i);
+		for (int i = 0; i < teamtsPointsForLoses.size(); i++) {
+			Team t = teamtsPointsForLoses.get(i);
 			sb.append("\n   ");
 			sb.append(t.getTeamID());
 			sb.append(": ");
